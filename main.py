@@ -1,10 +1,18 @@
 import requests
 from datetime import date
+import coinlist
 
 #There was no need of an API key as this is a free version of the CoinGiecko API
-print("Welcome to the CryptoView!\nPlease enter a number according to the choices below.")
 
-def coin_price(): #This function returns the current price of the Cryptocurrency
+
+print("Welcome to the CryptoView!")
+
+check_coinlist = input("If this is your first time here, we suggest you to check the coins that you can get data for. Press y to get the list or any other button to conitue:\n").upper()
+
+if check_coinlist == "Y":
+    print(coinlist.coin_name)
+
+def coin_price():  #This function returns the current price of the Cryptocurrency
     url = "https://api.coingecko.com/api/v3/simple/price"
 
     coin = input("Please enter the name of  the coin? Example: Bitcoin, Ethereum etc. \n").lower()
@@ -66,8 +74,12 @@ def track_your_buys(): #This function keeps a record of your crypto buys.
     print("Thank you!")
 
 
+print("Please enter a number according to the choices below")
+
 user_choice = input("1. Check the price of a coin\n2. Know the highest price a coin has reached\n3. Check the market capitilicazation of a coin\n"
                     "4. Save your latest buy into a google sheet\n")
+
+
 choices = {
     "1": coin_price,
     "2": coin_details,
