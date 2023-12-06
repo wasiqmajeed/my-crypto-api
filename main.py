@@ -6,7 +6,7 @@ import coinlist
 
 
 print("Welcome to the CryptoView!")
-
+flag = True
 check_coinlist = input("If this is your first time here, we suggest you to check the coins that you can get data for. Press y to get the list or any other button to conitue:\n").upper()
 
 if check_coinlist == "Y":
@@ -34,8 +34,8 @@ def coin_details():  # This function prints the all time high and the date when 
     url = f"https://api.coingecko.com/api/v3/coins/{id}"
 
     response1 = requests.get(url=url)
-    all_time_high = response1.json()["market_data"]["ath"]["usd"]
-    all_time_high_date = response1.json()["market_data"]["ath_date"]["usd"]
+    all_time_high = response1.json()["market_data"]["ath"][value_in]
+    all_time_high_date = response1.json()["market_data"]["ath_date"][value_in]
     print(f"The all time high for {id.capitalize()} is {all_time_high:,} {value_in.upper()} which was created on {all_time_high_date.split('T')[0]}")
 
 
@@ -74,16 +74,22 @@ def track_your_buys(): #This function keeps a record of your crypto buys.
     print("Thank you!")
 
 
-print("Please enter a number according to the choices below")
+while flag:
+    print("Please enter a number according to the choices below")
+    user_choice = input("1. Check the price of a coin\n2. Know the highest price a coin has reached\n3. Check the market capitilicazation of a coin\n"
+                        "4. Save your latest buy into a google sheet\n")
 
-user_choice = input("1. Check the price of a coin\n2. Know the highest price a coin has reached\n3. Check the market capitilicazation of a coin\n"
-                    "4. Save your latest buy into a google sheet\n")
+    choices = {
+        "1": coin_price,
+        "2": coin_details,
+        "3": marketcap,
+        "4": track_your_buys
+    }
+    choices[user_choice]()
 
+    try_again = input("Press Y to try another function, Press any other button to finish.\n").upper()
+    if try_again == "Y":
+        flag = True
+    else:
+        flag = False
 
-choices = {
-    "1": coin_price,
-    "2": coin_details,
-    "3": marketcap,
-    "4": track_your_buys
-}
-choices[user_choice]()
